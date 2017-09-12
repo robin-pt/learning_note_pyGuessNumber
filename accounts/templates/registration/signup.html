@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+{% block extra-style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'account.style.css' %}" />
+{% endblock extra-style %}
+{% block title %}註冊{% endblock title %}
+{% block content %}
+    <div>
+        <div class="form-signin-heading">
+            <h2>註冊</h2>
+        </div>
+        <form class="form-signin" method="POST" action=".">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group row">
+                <label for="{{ field.id_for_label }}" class="col-md-4 col-form-label">{{ field.label }}</label>
+                {% if not field.errors %}
+                {{ field|add_class:"form-control col-md-8" }}
+                {% else %}
+                {{ field|add_class:"form-control col-md-8 is-invalid" }}
+                <div class="invalid-feedback">{{ field.errors }}</div>
+                {% endif %}                    
+            </div>
+            {% endfor %}
+            <button class="btn btn-lg btn-danger btn-block" type="submit" value="login">確認</button>
+        </form>
+    </div>
+{% endblock content %}
