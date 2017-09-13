@@ -99,6 +99,17 @@ CACHES = {
             "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
             "IGNORE_EXCEPTIONS": True,
         }
+    },
+    "games": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://localhost:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "SOCKET_CONNECT_TIMEOUT": 5,
+            "SOCKET_TIMEOUT": 5,
+            "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
+            "IGNORE_EXCEPTIONS": True,
+        }
     }
 }
 
