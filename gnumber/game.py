@@ -2,6 +2,7 @@
 import uuid
 from django_redis import get_redis_connection
 
+
 def roomExist(roomID):
     """ retun true if room is exist """
     conn = get_redis_connection("games")
@@ -41,6 +42,35 @@ def roomMemberCounter(roomID):
         return int(result)
     else:
         return False
+
+def startGame(roomID, answer):
+    """ insert answer into room """
+    if not roomExist(roomID):
+        return False
+    conn = get_redis_connection("answer")
+    result = conn.set(roomID, answer)
+    del conn
+    if result == "OK":
+        return True
+    else:
+        return False
+
+def endGame(roomID):
+    """ ending of game """
+    if not roomExist(roomID):
+        return False
+    conn = get_redis_connection("answer")
+    conn.delete(roomID)
+    del conn
+
+def getAnswer(roomID):
+    """ get room's answer """
+    if not roomExist(roomID):
+        return False
+    conn = get_redis_connection("answer")
+    result = conn.get(roomID)
+    del conn
+    return result
 
 def userExistInRoom(roomID, user):
     """ check user is exist in room """
