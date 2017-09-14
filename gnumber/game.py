@@ -12,11 +12,12 @@ def roomExist(roomID):
 
 def create(userID):
     """ create game's room, return room's id """
-    roomID = uuid.uuid4()
+    roomID = uuid.uuid4().hex
     while roomExist(roomID):
-        roomID = uuid.uuid4()
+        roomID = uuid.uuid4().hex
     conn = get_redis_connection("games")
     conn.hset(roomID, userID, 0)
+    conn.expire(roomID, 300)
     del conn
     return roomID
 
@@ -36,7 +37,7 @@ def roomMemberCounter(roomID):
         conn = get_redis_connection("games")
         result = 0
         try:
-            result = conn.lhen(roomID)
+            result = conn.hlen(roomID)
         finally:
             del conn
         return int(result)

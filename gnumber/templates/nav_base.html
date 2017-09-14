@@ -1,4 +1,7 @@
-{% extends "base.html" %} {% block title %}全國最大在線猜數字上線啦！{% endblock title %} {% block content %}
+{% extends "base.html" %} {% block extra-style %}
+{% load static %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'game_style.css' %}"> {% endblock extra-style %} {% block title %}全國最大在線猜數字上線啦！{% endblock title %} {% block content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="/">猜數字</a>
@@ -9,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">開局</a>
+                    <a class="nav-link" href="{% url 'gnumber:create' %}">開局</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">英雄榜</a>
@@ -19,8 +22,9 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">{{ request.user }}</a>
+                        aria-expanded="false"><i class="material-icons">account_circle</i></a>
                     <div class="dropdown-menu" aria-labelledby="user-dropdown">
+                        <p class="dropdown-item disable">{{ request.user }}</p>
                         <a class="dropdown-item" href="{% url 'accounts:user_logout' %}">登出</a>
                     </div>
                 </li>

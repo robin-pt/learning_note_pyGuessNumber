@@ -1,0 +1,21 @@
+{% extends "nav_base.html" %}
+{% block body %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>排名</th>
+                <th>ID</th>
+                <th>回合</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if ranking_list %}
+        {% for results_cell in ranking_list %}
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ results_cell.user }}</td>
+            <td>{{ results_cell.result }}</td>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock body %}
