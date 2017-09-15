@@ -1,6 +1,7 @@
 """ handle game's room """
 import uuid
 from django_redis import get_redis_connection
+from . import rules
 
 
 def roomExist(roomID):
@@ -31,6 +32,13 @@ def close(roomID):
         finally:
             del conn
 
+def listRoom():
+    """ list current room """
+    conn = get_redis_connection("games")
+    result = conn.keys("*")
+    del conn
+    return result
+
 def roomMemberCounter(roomID):
     """ return amount of room's user """
     if roomExist(roomID):
@@ -44,17 +52,18 @@ def roomMemberCounter(roomID):
     else:
         return False
 
-def startGame(roomID, answer):
+def startGame(roomID):
     """ insert answer into room """
     if not roomExist(roomID):
         return False
-    conn = get_redis_connection("answer")
-    result = conn.set(roomID, answer)
-    del conn
-    if result == "OK":
-        return True
-    else:
+    status, response = rules.genQuestion(4)
+    if status is False:
         return False
+    conn = get_redis_connection("answer")
+    result = conn.set(roomID, response)
+    conn.expire(roomID, 300)
+    del conn
+    return result
 
 def endGame(roomID):
     """ ending of game """
@@ -72,6 +81,15 @@ def getAnswer(roomID):
     result = conn.get(roomID)
     del conn
     return result
+
+def checkMatch(roomID, inputNumber):
+    """ return input result """
+    if not roomExist(roomID):
+        return False
+    if not isinstance(inputNumber, str):
+        return False
+    answer = getAnswer(roomID)
+    return rules.isMatchAnswer(str(inputNumber), str(answer))
 
 def userExistInRoom(roomID, user):
     """ check user is exist in room """
@@ -105,6 +123,15 @@ def userQuit(roomID, user):
     if roomMemberCounter == 0:
         close(roomID)
     return True
+
+def getUsersInRoom(roomID):
+    """ get all user and their result """
+    if not roomExist(roomID):
+        return False
+    conn = get_redis_connection("games")
+    result = conn.hgetall(roomID)
+    del conn
+    return result
 
 def getUserResult(roomID, user):
     """ get user's result """

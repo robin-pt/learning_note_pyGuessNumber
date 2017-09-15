@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'pyGuestNumber.urls'
@@ -119,6 +119,7 @@ CACHES = {
             "SOCKET_TIMEOUT": 5,
             "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
             "IGNORE_EXCEPTIONS": True,
+            "CONNECTION_POOL_KWARGS": {"decode_responses": True},
         }
     }
 }

@@ -1,7 +1,41 @@
-{% extends "nav_base.html" %}
-{% block title %}遊戲房間{% endblock title %}
-{% block body %}
+{% extends "nav_base.html" %} {% block title %}遊戲房間{% endblock title %} {% block body %}
 <div class="container">
-    
+    <table id="result" class="table">
+        <thead>
+            <tr>
+                <th>玩家</th>
+                <th>回合</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user, value in game_status.items %}
+            <tr>
+                <td>{{ user }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="inner">
+        <label class="col-form-label" for="InputNumber">請輸入 4 個 0~9 整數</label>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <input type="text" id="InputNumber" name="InputNumber" class="form-control" placeholder="1234">
+                </div>
+                {% if not game_over %}
+                <div class="col-md-1">
+                    <button class="btn btn-primary btn-block" type="submit">確定</button>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+        {% if guess_result %}
+        <div id="guess-result">
+            <h3>{{ guess_result }}</h3>
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock body %}

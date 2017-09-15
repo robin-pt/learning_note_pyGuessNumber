@@ -11,8 +11,9 @@ def genQuestion(amount):
         return (False, "The number you entered is out of range.")
     else:
         sample = '0123456789'
-        genNumList = random.shuffle(random.sample(sample, amount))
+        genNumList = random.sample(sample, amount)
         return (True, "".join(genNumList))
+
 
 def isMatchAnswer(guess, answer):
     """
@@ -20,16 +21,17 @@ def isMatchAnswer(guess, answer):
     number is in answer list and in correct position, A + 1.
     """
     if not isinstance(guess, str) or not isinstance(answer, str):
-        return (False, "The number you entered is not specified.")
+        return (False, "The number you entered is not specified. input type:{}, answer type:{}".format(type(guess), type(answer)))
     elif len(guess) != len(answer):
-        return (False, "The number you entered is out of range.")
+        return (False, "The number you entered is out of range. length of input:{}, length of answer:{}".format(len(guess), len(answer)))
     else:
         abList = [0, 0]
         guessList = list(guess)
         answerList = list(answer)
         for element in guessList:
             if element in answerList:
-                resultElement = 0 if guessList.index(element) == answerList.index(element) else 1
+                resultElement = 0 if guessList.index(
+                    element) == answerList.index(element) else 1
                 abList[resultElement] += 1
         result = namedtuple('result', 'A B')
         return (True, result(abList[0], abList[1]))

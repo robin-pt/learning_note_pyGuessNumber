@@ -1,8 +1,26 @@
 .middle-message {
     width: 100%;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 40px;
     position: relative;
     height: auto;
+    text-align: center;
+}
+
+.container > .table {
+    margin-top: 70px !important;
+}
+
+#result {
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+#inner {
+    margin: 0 auto;
+}
+
+#guess-result {
+    margin: 0 auto;
     text-align: center;
 }

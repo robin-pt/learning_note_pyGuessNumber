@@ -3,5 +3,23 @@
     <div class="middle-message">
         <h1>全國最大在線猜數字上線啦！</h1>
     </div>
+    {% if room_list %}
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>房間</th>
+                <th>連結</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in room_list %}
+            <tr>
+                <td>{{ room }}</td>
+                <td><a href="{% url 'gnumber:game' room_id=room %}">進入</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 </div>
 {% endblock body %}
