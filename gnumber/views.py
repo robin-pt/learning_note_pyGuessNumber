@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
-from django import forms
 from django.contrib.auth.models import User
 from .models import Results
 from . import game
@@ -80,7 +79,7 @@ def gameRoom(request, room_id):
             
     
     status = game.getUsersInRoom(room_id)
-    if not (status, dict):
+    if not isinstance(status, dict):
         return render(request, 'error_message.html', {'error_message': '請輸入合法路徑'})
     outputResult = {}
     for key in status:

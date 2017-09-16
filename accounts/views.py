@@ -12,7 +12,7 @@ class Signin(LoginView):
 
     def redirectTo(self):
         """ redirect to index. """
-        return HttpResponseRedirect(reverse('guess_number:index'))
+        return HttpResponseRedirect(reverse('gnumber:index'))
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
@@ -24,8 +24,7 @@ def singup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            form.save()
             return HttpResponseRedirect(reverse('accounts:user_login'))
     else:
         form = UserCreationForm()
